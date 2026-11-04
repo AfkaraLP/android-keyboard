@@ -59,6 +59,9 @@ interface KeyboardManagerForAction {
     fun createInputTransaction(): ActionInputTransaction
 
     fun typeText(v: String)
+
+    // Types text that is being pasted, after applying the user's paste replacement rules
+    fun pasteText(v: String)
     fun typeTextSurroundedByWhitespace(v: String)
     fun typeUri(uri: Uri, mimeTypes: List<String>, ignoreConnectionOverride: Boolean = false): Boolean
     fun appSupportsImageInsertion(schema: String, ignoreConnectionOverride: Boolean): Boolean

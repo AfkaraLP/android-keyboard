@@ -110,6 +110,7 @@ import org.futo.inputmethod.latin.uix.getSettingBlocking
 import org.futo.inputmethod.latin.uix.getUnlockedSetting
 import org.futo.inputmethod.latin.uix.isDirectBootUnlocked
 import org.futo.inputmethod.latin.uix.setSetting
+import org.futo.inputmethod.latin.uix.settings.NavigationItemStyle
 import org.futo.inputmethod.latin.uix.settings.ScrollableList
 import org.futo.inputmethod.latin.uix.settings.SettingSlider
 import org.futo.inputmethod.latin.uix.settings.SettingToggleDataStore
@@ -121,6 +122,7 @@ import org.futo.inputmethod.latin.uix.settings.pages.PaymentSurface
 import org.futo.inputmethod.latin.uix.settings.pages.PaymentSurfaceHeading
 import org.futo.inputmethod.latin.uix.settings.useDataStore
 import org.futo.inputmethod.latin.uix.settings.useDataStoreValue
+import org.futo.inputmethod.latin.uix.settings.userSettingNavigationItem
 import org.futo.inputmethod.latin.uix.settings.userSettingToggleDataStore
 import org.futo.inputmethod.latin.uix.theme.Typography
 import java.io.File
@@ -1257,7 +1259,7 @@ val ClipboardHistoryAction = Action(
                                     modifier = Modifier.animateItem(),
                                     clipboardEntry = entry, onPaste = {
                                         if(it.text != null) {
-                                            manager.typeText(it.text)
+                                            manager.pasteText(it.text)
                                         } else if(it.backingFile != null && it.mimeTypes.isNotEmpty()) {
                                             val request = ClipboardProviderState.addRequest(
                                                 ClipboardPasteRequest(
@@ -1329,6 +1331,13 @@ val ClipboardHistoryAction = Action(
                 title = R.string.typing_settings_enable_clipboard_history,
                 setting = ClipboardHistoryEnabled
             ).copy(searchTags = R.string.typing_settings_enable_clipboard_history_tags),
+
+            userSettingNavigationItem(
+                title = R.string.paste_replace_rules_title,
+                subtitle = R.string.paste_replace_rules_subtitle,
+                style = NavigationItemStyle.Misc,
+                navigateTo = "pasteReplaceRules"
+            ).copy(searchTags = R.string.paste_replace_rules_tags),
 
             userSettingToggleDataStore(
                 title = R.string.action_clipboard_manager_settings_save_images,

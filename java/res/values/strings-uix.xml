@@ -90,6 +90,24 @@
     <!-- This message is shown when we're typing in a text field does not support image insertion ("app" refers to the external app that is providing the text field) -->
     <string name="action_clipboard_manager_error_app_image_insertion_unsupported">App does not support image insertion</string>
     <string name="action_clipboard_manager_settings_title">Clipboard Manager Settings</string>
+    <string name="paste_replace_rules_title">Paste Replacement Rules</string>
+    <string name="paste_replace_rules_subtitle">Rewrite text with regular expressions when pasting, such as to change links</string>
+    <string name="paste_replace_rules_tags">copy, paste, find, replace, regex, regular expression, link, url, x.com, twitter</string>
+    <string name="paste_replace_rules_tip">Rules are applied from top to bottom when pasting from the keyboard: the paste action, clipboard manager and quick clips. Pasting from an app\'s own menu doesn\'t go through the keyboard, so rules can\'t apply to it. The copied text itself is not changed.</string>
+    <string name="paste_replace_rules_none">There are no rules</string>
+    <string name="paste_replace_rules_add">Add rule</string>
+    <string name="paste_replace_rules_edit">Edit rule</string>
+    <string name="paste_replace_rules_delete">Delete rule</string>
+    <string name="paste_replace_rules_move_up">Move rule up</string>
+    <string name="paste_replace_rules_move_down">Move rule down</string>
+    <string name="paste_replace_rules_pattern">Find (regular expression)</string>
+    <string name="paste_replace_rules_replacement">Replace with ($1 for the first group)</string>
+    <!-- Shown under a rule's pattern, %1$s is the text it will be replaced with -->
+    <string name="paste_replace_rules_replaced_with">Replace with: %1$s</string>
+    <string name="paste_replace_rules_invalid_pattern">Invalid regular expression: %1$s</string>
+    <string name="paste_replace_rules_invalid_replacement">Invalid replacement: %1$s</string>
+    <string name="paste_replace_rules_save">Save</string>
+    <string name="paste_replace_rules_cancel">Cancel</string>
     <string name="action_clipboard_manager_settings_save_images">Save copied images</string>
     <string name="action_clipboard_manager_settings_save_screenshots">Save recent screenshots</string>
     <string name="action_clipboard_manager_settings_save_screenshots_subtitle">You\'ll need to grant permission to access your screenshots</string>

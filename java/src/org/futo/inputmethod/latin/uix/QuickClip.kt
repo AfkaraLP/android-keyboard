@@ -209,7 +209,7 @@ fun RowScope.QuickClipView(state: QuickClipState, dismiss: () -> Unit) {
                     uri = null
                 ) {
                     manager!!.performHapticAndAudioFeedback(Constants.CODE_TAB, view)
-                    manager!!.typeText(it.text)
+                    manager!!.pasteText(it.text)
                     QuickClip.markQuickClipDismissed()
                     dismiss()
                 }
