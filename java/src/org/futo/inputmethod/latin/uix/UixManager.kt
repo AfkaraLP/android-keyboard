@@ -1,6 +1,7 @@
 package org.futo.inputmethod.latin.uix
 
 import android.content.ClipDescription
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -128,6 +129,8 @@ import org.futo.inputmethod.latin.uix.actions.BugViewerAction
 import org.futo.inputmethod.latin.uix.actions.BugViewerState
 import org.futo.inputmethod.latin.uix.actions.KeyboardModeAction
 import org.futo.inputmethod.latin.uix.actions.PersistentEmojiState
+import org.futo.inputmethod.latin.uix.actions.clipboard.PasteReplaceRules
+import org.futo.inputmethod.latin.uix.actions.clipboard.PasteReplaceRulesSetting
 import org.futo.inputmethod.latin.uix.actions.keyCode
 import org.futo.inputmethod.latin.uix.actions.keyCodeAlt
 import org.futo.inputmethod.latin.uix.resizing.KeyboardResizers
@@ -285,6 +288,16 @@ class UixActionKeyboardManager(val uixManager: UixManager, val latinIME: LatinIM
         } else {
             latinIME.latinIMELegacy.onTextInput(v)
         }
+    }
+
+    private fun applyPasteReplaceRules(text: String): String =
+        PasteReplaceRules.applyRules(
+            text,
+            PasteReplaceRules.decode(latinIME.getSetting(PasteReplaceRulesSetting))
+        )
+
+    override fun pasteText(v: String) {
+        typeText(applyPasteReplaceRules(v))
     }
 
     override fun typeTextSurroundedByWhitespace(v: String) {
@@ -517,8 +530,23 @@ class UixActionKeyboardManager(val uixManager: UixManager, val latinIME: LatinIM
         }
     }
 
+    private fun getClipboardText(): String? = try {
+        val clipboardManager = latinIME.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager.primaryClip?.takeIf { it.itemCount == 1 }?.getItemAt(0)?.text?.toString()
+    } catch(_: Exception) {
+        null
+    }
+
     override fun pasteFromClipboard() {
-        sendKeyEvent(KeyEvent.KEYCODE_V, KeyEvent.META_CTRL_ON)
+        // Let the app handle the paste unless a rule changes the text, this way images and
+        // formatted text are retained
+        val text = getClipboardText()
+        val replacedText = text?.let { applyPasteReplaceRules(it) }
+        if(replacedText != null && replacedText != text) {
+            typeText(replacedText)
+        } else {
+            sendKeyEvent(KeyEvent.KEYCODE_V, KeyEvent.META_CTRL_ON)
+        }
         uixManager.dismissQuickClips()
     }
 
